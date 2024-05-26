@@ -2,7 +2,9 @@ package com.fiap.lanchoneteapi.application.adapters.controllers;
 
 import com.fiap.lanchoneteapi.application.adapters.services.PedidoServiceImplAdapterPort;
 import com.fiap.lanchoneteapi.application.entities.Pedido;
+import com.fiap.lanchoneteapi.application.entities.dtos.PedidoRecordEntityDTO;
 import com.fiap.lanchoneteapi.application.entities.dtos.PedidoRecordNewEntityDTO;
+import com.fiap.lanchoneteapi.core.domain.enums.StatusPedidoEnum;
 import com.fiap.lanchoneteapi.infrastructure.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -64,6 +67,21 @@ public class PedidoControllerAdapter {
         Pedido updatedObj = pedidoService.update(obj);
         return ResponseEntity.ok().body(obj);
 
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<PedidoRecordEntityDTO>> listarPedidosPorStatus(@PathVariable StatusPedidoEnum status) {
+        List<Pedido> pedidos = pedidoService.findByStatus(status);
+        List<PedidoRecordEntityDTO> pedidoRecordDTOs = pedidos.stream().map(pedido -> {
+            return new PedidoRecordEntityDTO(pedido.getId(), pedido.getItens(), pedido.getStatus());
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(pedidoRecordDTOs);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Void> atualizarStatus(@PathVariable Integer id, @RequestParam StatusPedidoEnum status) {
+        pedidoService.updateStatus(id, status);
+        return ResponseEntity.noContent().build();
     }
 
 }

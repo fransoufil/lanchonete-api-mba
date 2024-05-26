@@ -85,6 +85,24 @@ public class PedidoServiceImplAdapterPort implements IPedidoServicePort {
         return pedidoRepositoryPort.findAll();
     }
 
+    @Override
+    public List<Pedido> findByStatus(StatusPedidoEnum status) {
+        return pedidoRepositoryPort.findByStatusOrderByIdAsc(status);
+    }
+
+    @Override
+    public void updateStatus(Integer id, StatusPedidoEnum statusPedidoEnum) {
+
+        Optional<Pedido> pedidoOpt = pedidoRepositoryPort.findById(id);
+        if (pedidoOpt.isPresent()) {
+            Pedido pedido = pedidoOpt.get();
+            pedido.setStatus(statusPedidoEnum);
+            pedidoRepositoryPort.save(pedido);
+        }
+
+    }
+
+
     public Pedido find(Integer id){
 
         Optional<Pedido> obj = pedidoRepositoryPort.findById(id);
