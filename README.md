@@ -11,8 +11,8 @@ Este projeto implementa um sistema de pedidos e pagamentos utilizando arquitetur
 
 ### Pedido
 - Criação e finalização de pedidos
-- Acompanhamento do status do pedido (Recebido, Em preparação, Pronto, Finalizado)
-- Notificação ao cliente quando o pedido está pronto para retirada
+- Acompanhamento do status do pedidoDomain (Recebido, Em preparação, Pronto, Finalizado)
+- Notificação ao clienteDomain quando o pedidoDomain está pronto para retirada
 
 ### Pagamento
 - Integração com MercadoPago para pagamentos via QRCode
@@ -102,7 +102,7 @@ src
     services:
       app:
         image: openjdk:11-jdk
-        container_name: pedido-app
+        container_name: pedidoDomain-app
         build:
           context: .
           dockerfile: Dockerfile
@@ -118,7 +118,7 @@ src
 
       db:
         image: mysql:8.0
-        container_name: pedido-db
+        container_name: pedidoDomain-db
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: seuprojeto
@@ -146,22 +146,22 @@ src
 ## APIs Disponíveis
 
 ### Cliente
-- `POST /clientes` - Cria um novo cliente
-- `GET /clientes/{id}` - Obtém um cliente pelo ID
+- `POST /clientes` - Cria um novo clienteDomain
+- `GET /clientes/{id}` - Obtém um clienteDomain pelo ID
 - `GET /clientes` - Lista todos os clientes
-- `DELETE /clientes/{id}` - Deleta um cliente pelo ID
+- `DELETE /clientes/{id}` - Deleta um clienteDomain pelo ID
 
 ### Pedido
-- `POST /pedidos` - Cria um novo pedido
-- `GET /pedidos/{id}` - Obtém um pedido pelo ID
+- `POST /pedidos` - Cria um novo pedidoDomain
+- `GET /pedidos/{id}` - Obtém um pedidoDomain pelo ID
 - `GET /pedidos` - Lista todos os pedidos
-- `DELETE /pedidos/{id}` - Deleta um pedido pelo ID
+- `DELETE /pedidos/{id}` - Deleta um pedidoDomain pelo ID
 
 ### Produto
-- `POST /produtos` - Cria um novo produto
-- `GET /produtos/{id}` - Obtém um produto pelo ID
+- `POST /produtos` - Cria um novo produtoDomain
+- `GET /produtos/{id}` - Obtém um produtoDomain pelo ID
 - `GET /produtos` - Lista todos os produtos
-- `DELETE /produtos/{id}` - Deleta um produto pelo ID
+- `DELETE /produtos/{id}` - Deleta um produtoDomain pelo ID
 
 ## Contribuição
 

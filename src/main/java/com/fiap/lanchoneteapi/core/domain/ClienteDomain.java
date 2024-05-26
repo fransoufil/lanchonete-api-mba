@@ -1,15 +1,15 @@
-package com.fiap.lanchoneteapi.application.core.domain;
+package com.fiap.lanchoneteapi.core.domain;
 
 import java.util.Objects;
 
-public class Cliente {
+public class ClienteDomain {
 
     private Integer id;
     private String cpf;
     private String nome;
     private String email;
 
-    public Cliente(Integer id, String cpf, String nome, String email) {
+    public ClienteDomain(Integer id, String cpf, String nome, String email) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -52,8 +52,8 @@ public class Cliente {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cliente cliente = (Cliente) o;
-        return Objects.equals(id, cliente.id) && Objects.equals(cpf, cliente.cpf);
+        ClienteDomain clienteDomain = (ClienteDomain) o;
+        return Objects.equals(id, clienteDomain.id) && Objects.equals(cpf, clienteDomain.cpf);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "ClienteDomain{" +
                 "id=" + id +
                 ", cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +

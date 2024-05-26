@@ -19,6 +19,6 @@ public class OpenApiConfig {
                         .termsOfService("Terms Of Service")
                         .license(new License()
                                 .name("Apache 2.0")
-                                .url("https://github.com/fransoufil/fastfoodstore-mvc")));
+                                .url("https://github.com/fransoufil/lanchonete-api")));
     }
 }
