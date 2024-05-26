@@ -5,23 +5,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
-public class Fila implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+@Entity (name = "tb_fila")
+public class Fila {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer idPedido;
+    private List<Pedido> pedidos;
 
-    public Fila(Integer id, Integer idPedido) {
+    public Fila() {
+    }
+
+    public Fila(Integer id, List<Pedido> pedidos) {
         this.id = id;
-        this.idPedido = idPedido;
+        this.pedidos = pedidos;
+    }
+
+    public Fila(Integer id) {
+        this.id = id;
+        this.pedidos = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -32,12 +37,20 @@ public class Fila implements Serializable {
         this.id = id;
     }
 
-    public Integer getIdPedido() {
-        return idPedido;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void adicionarPedido(Pedido pedido) {
+        this.pedidos.add(pedido);
+    }
+
+    public void removerPedido(Pedido pedido) {
+        this.pedidos.remove(pedido);
     }
 
     @Override
@@ -45,19 +58,20 @@ public class Fila implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fila fila = (Fila) o;
-        return Objects.equals(id, fila.id);
+        return Objects.equals(id, fila.id) &&
+                Objects.equals(pedidos, fila.pedidos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, pedidos);
     }
 
     @Override
     public String toString() {
         return "Fila{" +
                 "id=" + id +
-                ", idPedido=" + idPedido +
+                ", pedidos=" + pedidos +
                 '}';
     }
 }

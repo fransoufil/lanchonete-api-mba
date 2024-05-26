@@ -15,7 +15,7 @@ public interface IPedidoServicePort {
 
     Pedido update(Pedido obj);
 
-    Page<Pedido> findAllByOrderById(Integer page, Integer linesPerPage, String orderBy, String direction);
+    List<Pedido> findAllByOrderById(Integer page, Integer linesPerPage, String orderBy, String direction);
 
     List<Pedido> findAll();
 }

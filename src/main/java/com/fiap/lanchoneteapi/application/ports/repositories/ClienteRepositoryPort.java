@@ -1,5 +1,7 @@
 package com.fiap.lanchoneteapi.application.ports.repositories;
 import com.fiap.lanchoneteapi.application.entities.Cliente;
+import com.fiap.lanchoneteapi.core.domain.ClienteDomain;
+import com.fiap.lanchoneteapi.core.ports.ClienteRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

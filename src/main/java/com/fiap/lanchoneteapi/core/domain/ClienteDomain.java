@@ -1,5 +1,8 @@
 package com.fiap.lanchoneteapi.core.domain;
 
+import com.fiap.lanchoneteapi.application.entities.Pedido;
+
+import java.util.List;
 import java.util.Objects;
 
 public class ClienteDomain {
@@ -8,6 +11,8 @@ public class ClienteDomain {
     private String cpf;
     private String nome;
     private String email;
+
+    private List<Pedido> pedidos;
 
     public ClienteDomain(Integer id, String cpf, String nome, String email) {
         this.id = id;

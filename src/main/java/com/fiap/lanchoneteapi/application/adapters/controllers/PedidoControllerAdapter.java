@@ -48,12 +48,12 @@ public class PedidoControllerAdapter {
     }
 
     @GetMapping(value = "/page")
-    public ResponseEntity<Page<Pedido>> findAllByOrderById(@RequestParam(value="page", defaultValue="0") Integer page,
+    public ResponseEntity<List<Pedido>> findAllByOrderById(@RequestParam(value="page", defaultValue="0") Integer page,
                                                            @RequestParam(value="linesPerPage", defaultValue="2") Integer linesPerPage,
                                                            @RequestParam(value="orderBy", defaultValue="instante") String orderBy,
                                                            @RequestParam(value="direction", defaultValue="DESC") String direction) {
 
-        Page<Pedido> list = pedidoService.findAllByOrderById(page, linesPerPage, orderBy, direction);
+        List<Pedido> list = pedidoService.findAllByOrderById(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
 
     }

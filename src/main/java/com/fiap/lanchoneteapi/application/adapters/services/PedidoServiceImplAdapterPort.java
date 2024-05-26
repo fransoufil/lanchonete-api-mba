@@ -9,7 +9,6 @@ import com.fiap.lanchoneteapi.application.ports.services.IPedidoServicePort;
 import com.fiap.lanchoneteapi.core.domain.enums.StatusPedidoEnum;
 import com.fiap.lanchoneteapi.infrastructure.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -75,7 +74,7 @@ public class PedidoServiceImplAdapterPort implements IPedidoServicePort {
     }
 
     @Override
-    public Page<Pedido> findAllByOrderById(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public List<Pedido> findAllByOrderById(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return pedidoRepositoryPort.findAllByOrderById(pageRequest);
