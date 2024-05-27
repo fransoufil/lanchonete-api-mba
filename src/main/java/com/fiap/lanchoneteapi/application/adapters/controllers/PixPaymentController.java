@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/lanchonete")
+@RequestMapping("pagamentos")
 public class PixPaymentController {
 
     private final PixPaymentService pixPaymentService;
 
-    @Autowired
     public PixPaymentController(PixPaymentService pixPaymentService) {
         this.pixPaymentService = pixPaymentService;
     }
 
-    @PostMapping(value = "/process_payment")
+    @PostMapping("/processar")
     public ResponseEntity<PixPaymentResponseDTO> processPayment(@RequestBody @Valid PixPaymentDTO pixPaymentDTO) {
         PixPaymentResponseDTO payment = pixPaymentService.processPayment(pixPaymentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(payment);

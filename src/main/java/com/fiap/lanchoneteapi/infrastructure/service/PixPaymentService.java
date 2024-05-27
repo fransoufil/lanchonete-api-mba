@@ -3,6 +3,7 @@ package com.fiap.lanchoneteapi.infrastructure.service;
 
 import com.fiap.lanchoneteapi.application.entities.dtos.PixPaymentDTO;
 import com.fiap.lanchoneteapi.application.entities.dtos.PixPaymentResponseDTO;
+import com.fiap.lanchoneteapi.infrastructure.exceptions.MercadoPagoException;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.common.IdentificationRequest;
 import com.mercadopago.client.payment.PaymentClient;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PixPaymentService {
 
-    @Value("${mercado_pago_sample_access_token}")
+    @Value("${mercadopago.access_token}")
     private String mercadoPagoAccessToken;
 
     public PixPaymentResponseDTO processPayment(PixPaymentDTO pixPaymentDTO) {
@@ -53,10 +54,8 @@ public class PixPaymentService {
                     createdPayment.getPointOfInteraction().getTransactionData().getQrCodeBase64(),
                     createdPayment.getPointOfInteraction().getTransactionData().getQrCode());
         } catch (MPApiException apiException) {
-            System.out.println(apiException.getApiResponse().getContent());
             throw new MercadoPagoException(apiException.getApiResponse().getContent());
         } catch (MPException exception) {
-            System.out.println(exception.getMessage());
             throw new MercadoPagoException(exception.getMessage());
         }
     }
