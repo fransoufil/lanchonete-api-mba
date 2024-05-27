@@ -1,64 +1,39 @@
-# Sistema de Pedido e Pagamento
+# LANCHONETE-API
 
-Este projeto implementa um sistema de pedidos e pagamentos utilizando arquitetura hexagonal em Java com Spring Boot. O sistema permite aos clientes selecionar produtos, realizar pagamentos via QRCode do MercadoPago, acompanhar o progresso de seus pedidos e oferece funcionalidades administrativas para gerenciamento de clientes e produtos.
+Este projeto implementa um sistema de lanchonete com pedidos e pagamentos utilizando arquitetura hexagonal em Java com Spring Boot. 
+O sistema permite aos clientes selecionar produtos e realizar pagamentos via Pix do MercadoPago, 
+acompanhar o progresso de seus pedidos e oferece funcionalidades administrativas para gerenciamento de clientes, fila de pedidos e produtos.
 
-## Funcionalidades
+Este projeto encontra-se na v.1, visando entrega na primeira fase do MBA Engenharia de Software da FIAP/SP.
+
+## Pricipais Funcionalidades
 
 ### Cliente
 - Identificação via CPF ou cadastro com nome e email
-- Seleção de produtos (Lanche, Acompanhamento, Bebida, Sobremesa)
+- Seleção de produtos por categoria (Lanche, Acompanhamento, Bebida, Sobremesa)
 - Visualização de nome, descrição e preço dos produtos
 
 ### Pedido
 - Criação e finalização de pedidos
 - Acompanhamento do status do pedidoDomain (Recebido, Em preparação, Pronto, Finalizado)
-- Notificação ao clienteDomain quando o pedidoDomain está pronto para retirada
+- Notificação ao Cliente quando o Pedido está pronto para retirada
 
 ### Pagamento
-- Integração com MercadoPago para pagamentos via QRCode
+- Integração com MercadoPago para pagamentos via Pix
 
 ### Administrativo
-- Gerenciamento de clientes (campanhas promocionais)
-- Gerenciamento de produtos e categorias (nome, categoria, preço, descrição, imagens)
-- Acompanhamento dos pedidos em andamento e tempo de espera
+- Gerenciamento de clientes
+- Gerenciamento de produtos
+- Acompanhamento dos pedidos em andamento
 
 ## Estrutura do Projeto
 
-O projeto segue a arquitetura hexagonal, dividindo o código em camadas bem definidas:
-
-src
-└── main
-├── java
-│ └── com
-│ └── seuprojeto
-│ ├── application
-│ │ └── service
-│ │ ├── ClienteService.java
-│ │ ├── FilaService.java
-│ │ ├── PedidoService.java
-│ │ ├── ProdutoService.java
-│ │ └── FakeCheckoutService.java
-│ ├── domain
-│ │ ├── model
-│ │ └── repository
-│ ├── infrastructure
-│ │ ├── persistence
-│ │ │ └── jpa
-│ │ └── adapter
-│ │ ├── ClienteServiceImpl.java
-│ │ ├── PedidoServiceImpl.java
-│ │ ├── ProdutoServiceImpl.java
-│ │ └── DBService.java
-│ └── interface
-│ ├── controller
-│ └── dto
-└── resources
-
+O projeto pretendeu seguir a arquitetura hexagonal, dividindo o código em camadas bem definidas.
 
 ## Instalação
 
 ### Pré-requisitos
-- Java 11 ou superior
+- Java 17 ou superior
 - Docker e Docker Compose
 - MySQL
 
@@ -67,108 +42,37 @@ src
 1. Clone o repositório:
     ```bash
     git clone https://github.com/seuprojeto.git
-    cd seuprojeto
+    cd lanchonete-api
     ```
 
-2. Configure o banco de dados no `application.properties`:
+2. Configure o banco de dados no `application-dev.properties`:
     ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/seuprojeto
-    spring.datasource.username=root
-    spring.datasource.password=root
+    spring.profiles.active=dev
+    spring.datasource.url=jdbc:mysql://localhost:3306/lanchonete-api
+    spring.datasource.username=SEU_USUARIO_ROOT
+    spring.datasource.password=SUA_SENHA
     spring.jpa.hibernate.ddl-auto=update
     ```
 
-3. Configure o arquivo `Dockerfile` para construir a aplicação:
-    ```Dockerfile
-    # Use a imagem base do OpenJDK
-    FROM openjdk:11-jdk
-
-    # Defina o diretório de trabalho
-    WORKDIR /app
-
-    # Copie o arquivo JAR da aplicação para o contêiner
-    COPY target/seuprojeto.jar app.jar
-
-    # Exponha a porta que a aplicação irá rodar
-    EXPOSE 8080
-
-    # Comando para executar a aplicação
-    ENTRYPOINT ["java", "-jar", "app.jar"]
-    ```
-
-4. Crie o arquivo `docker-compose.yml` no diretório raiz do projeto:
-    ```yaml
-    version: '3.8'
-    services:
-      app:
-        image: openjdk:11-jdk
-        container_name: pedidoDomain-app
-        build:
-          context: .
-          dockerfile: Dockerfile
-        ports:
-          - "8080:8080"
-        environment:
-          SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/seuprojeto
-          SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD: root
-          SPRING_JPA_HIBERNATE_DDL_AUTO: update
-        depends_on:
-          - db
-
-      db:
-        image: mysql:8.0
-        container_name: pedidoDomain-db
-        environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: seuprojeto
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
-        ports:
-          - "3306:3306"
-        volumes:
-          - db_data:/var/lib/mysql
-
-    volumes:
-      db_data:
-    ```
-
-5. Build e execute a aplicação usando Docker:
+3. Build e execute a aplicação usando Docker:
     ```bash
     docker-compose up --build
     ```
 
-6. Acesse o Swagger para interagir com as APIs:
+4. Acesse o Swagger para interagir com as APIs:
     ```
     http://localhost:8080/swagger-ui.html
     ```
+5. Caso prefira, pode ser executado localmente no profile de teste com BD h2 que está configurado no `application-test.properties`, bastando alterar a linha no `application.properties`:
+   ```properties
+    spring.profiles.active=dev
+    ```
+6. Para integração com o MercadoPago é necessário criar um token, siga as instruções no link:
 
-## APIs Disponíveis
-
-### Cliente
-- `POST /clientes` - Cria um novo clienteDomain
-- `GET /clientes/{id}` - Obtém um clienteDomain pelo ID
-- `GET /clientes` - Lista todos os clientes
-- `DELETE /clientes/{id}` - Deleta um clienteDomain pelo ID
-
-### Pedido
-- `POST /pedidos` - Cria um novo pedidoDomain
-- `GET /pedidos/{id}` - Obtém um pedidoDomain pelo ID
-- `GET /pedidos` - Lista todos os pedidos
-- `DELETE /pedidos/{id}` - Deleta um pedidoDomain pelo ID
-
-### Produto
-- `POST /produtos` - Cria um novo produtoDomain
-- `GET /produtos/{id}` - Obtém um produtoDomain pelo ID
-- `GET /produtos` - Lista todos os produtos
-- `DELETE /produtos/{id}` - Deleta um produtoDomain pelo ID
-
-## Contribuição
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Faça commit das suas alterações (`git commit -am 'Adiciona nova feature'`)
-4. Faça push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+   https://www.mercadopago.com.br/developers/pt/reference/oauth/_oauth_token/post
 
 
+7. Após criado o token, altere a linha no `application.properties`:
+   ```properties
+    mercadopago.access_token=SEU_ACCESS_TOKEN
+    ```
