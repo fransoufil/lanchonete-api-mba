@@ -72,6 +72,10 @@ public class ProdutoControllerAdapter {
     }
 
     @PostMapping
+    @Operation(summary = "Realiza o cadastro de novo Produto", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Produto cadastrado com sucesso")
+    })
     public ResponseEntity<Void> insert (@RequestBody ProdutoRecordNewEntityDTO objDTO) {
 
         Produto obj = produtoService.fromDTO(objDTO);
@@ -83,6 +87,10 @@ public class ProdutoControllerAdapter {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Realiza a atualização de dados de Produto", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Dados do Produto atualizado com sucesso")
+    })
     public ResponseEntity<Void> update (@RequestBody ProdutoRecordNewEntityDTO objDTO, @PathVariable Integer id) {
 
         Produto obj = produtoService.fromDTO(objDTO);
@@ -92,6 +100,10 @@ public class ProdutoControllerAdapter {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Realiza a deleção de Produto cadastrado", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Produto deletado com sucesso")
+    })
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
         produtoService.delete(id);

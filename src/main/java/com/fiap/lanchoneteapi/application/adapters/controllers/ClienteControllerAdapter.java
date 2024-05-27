@@ -68,7 +68,7 @@ public class ClienteControllerAdapter {
     @PostMapping
     @Operation(summary = "Realiza o cadastro de novo Cliente", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Cadastro realizado com sucesso")
+            @ApiResponse(responseCode = "201", description = "Cliente cadastrado com sucesso")
     })
     public ResponseEntity<Void> insert (@RequestBody ClienteRecordEntityDTO objDTO) {
 
@@ -81,6 +81,10 @@ public class ClienteControllerAdapter {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Realiza a atualização de dados de Cliente", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente atualizado com sucesso")
+    })
     public ResponseEntity<Void> update (@RequestBody ClienteRecordEntityDTO objDTO, @PathVariable Integer id) {
 
         Cliente obj = clienteService.fromDTO(objDTO);
@@ -91,6 +95,10 @@ public class ClienteControllerAdapter {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Realiza a deleção de Cliente", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente deletado com sucesso")
+    })
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
         clienteService.delete(id);
