@@ -1,8 +1,7 @@
 # LANCHONETE-API
 
 Este projeto implementa um sistema de lanchonete com pedidos e pagamentos utilizando arquitetura hexagonal em Java com Spring Boot. 
-O sistema permite aos clientes selecionar produtos e realizar pagamentos via Pix do MercadoPago, 
-acompanhar o progresso de seus pedidos e oferece funcionalidades administrativas para gerenciamento de clientes, fila de pedidos e produtos.
+O sistema permite aos clientes selecionar produtos e realizar pagamentos via Pix do MercadoPago, acompanhar o progresso de seus pedidos e oferece funcionalidades administrativas para gerenciamento de clientes, fila de pedidos e produtos.
 
 Este projeto encontra-se na v.1, visando entrega na primeira fase do MBA Engenharia de Software da FIAP/SP.
 
@@ -63,9 +62,9 @@ O projeto pretendeu seguir a arquitetura hexagonal, dividindo o código em camad
     ```
     http://localhost:8080/swagger-ui.html
     ```
-5. Caso prefira, pode ser executado localmente no profile de teste com BD h2 que está configurado no `application-test.properties`, bastando alterar a linha no `application.properties`:
+5. Caso prefira, pode ser executado localmente, com dados mock do BD no profile de teste com h2 Database, configurando o `application-test.properties` alterarando a linha no `application.properties`:
    ```properties
-    spring.profiles.active=dev
+    spring.profiles.active=test
     ```
 6. Para integração com o MercadoPago é necessário criar um token, siga as instruções no link:
 
