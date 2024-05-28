@@ -40,7 +40,7 @@ O projeto pretendeu seguir a arquitetura hexagonal, dividindo o código em camad
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seuprojeto.git
+    git clone https://github.com/fransoufil/lanchonete-api
     cd lanchonete-api
     ```
 
