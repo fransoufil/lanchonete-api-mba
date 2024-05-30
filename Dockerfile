@@ -1,8 +1,18 @@
-# FROM maven:3.8.2-jdk-8 # for Java 8
-FROM maven:3.8.5-openjdk-17
+FROM maven:3.8.4-amazoncorretto-17 AS build
+
+COPY src /app/src
+COPY pom.xml /app
 
 WORKDIR /app
-COPY . .
+
 RUN mvn clean install
 
-CMD mvn spring-boot:run
+FROM  openjdk:17-alpine
+
+COPY --from=build /app/target/lanchonete-api-0.0.1-SNAPSHOT.jar /app/app.jar
+
+WORKDIR /app
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "app.jar"]
